@@ -19,6 +19,7 @@ COUNT = 30
 INTERVAL = 0.3
 SCENARIO = mixed
 OUTPUT = kafka
+group_id = group_test_2
 
 .PHONY: help venv install test run run-normal run-anomaly run-mixed docker-up docker-down docker-logs kafka-create-topic kafka-list-topics kafka-describe-topic producer-docker clean
 
@@ -84,6 +85,12 @@ producer-docker:
 
 producer-kafka:
 	$(COMPOSE) run --rm producer --count $(COUNT) --interval $(INTERVAL) --scenario $(SCENARIO) --output $(OUTPUT)
+
+consumer-kafka:
+	$(COMPOSE) run --rm consumer --group_id $(group_id)
+
+consumer-kafka-sparks:
+	$(COMPOSE) run --rm spark_stream
 
 clean:
 	rm -rf .pytest_cache

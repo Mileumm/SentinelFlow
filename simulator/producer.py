@@ -23,7 +23,7 @@ def delivery_report(error, message) -> None:
         f"key = {message.key()} "
         f"partition = {message.partition()} "
         f"offset = {message.offset()} "
-        f"value = {message.value()}"cleqr
+        f"value = {message.value()}"
     )
     
 
@@ -107,11 +107,7 @@ def main() -> None:
             print(json.dumps(event), flush=True)
 
         elif args.output == "kafka":
-            send_event_to_kafka(
-                producer=kafka_producer,
-                topic=args.topic,
-                event=event,
-            )
+            send_event_to_kafka(producer=kafka_producer, topic=args.topic, event=event)
 
         if args.interval > 0:
             time.sleep(args.interval)

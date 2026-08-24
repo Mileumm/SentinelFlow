@@ -1,9 +1,33 @@
 services:
+  spark_stream:
+    build:
+      context: .
+      dockerfile: streaming/stream_sparks/Dockerfile
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      KAFKA_TOPIC: sensor-events
+    depends_on:
+      - kafka  
   producer:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: simulator/producer/Dockerfile
     container_name: sentinel-producer
+    volumes:
+      - .:/app
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      KAFKA_TOPIC: sensor-events
+    depends_on:
+      - kafka
+    profiles:
+      - tools
+
+  consumer:
+    build:
+      context: .
+      dockerfile: simulator/consumer/Dockerfile
+    container_name: sentinel-consumer
     volumes:
       - .:/app
     environment:
