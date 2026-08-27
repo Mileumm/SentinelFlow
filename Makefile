@@ -39,6 +39,9 @@ help:
 	@echo "  make kafka-list-topics     List Kafka topics"
 	@echo "  make kafka-describe-topic  Describe Kafka topic"
 	@echo "  make producer-docker       Run producer inside Docker"
+	@echo "  make producer-kafka        Run producer kafka"
+	@echo "  make consumer-kafka        Run consumer kafka"
+	@echo "  make consumer-sparks        Run consumer sparks"
 
 venv:
 	$(PYTHON) -m venv $(VENV_DIR)
@@ -89,7 +92,7 @@ producer-kafka:
 consumer-kafka:
 	$(COMPOSE) run --rm consumer --group_id $(group_id)
 
-consumer-kafka-sparks:
+consumer-sparks:
 	$(COMPOSE) run --rm spark_stream
 
 clean:

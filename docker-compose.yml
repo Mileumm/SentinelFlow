@@ -1,13 +1,16 @@
 services:
   spark_stream:
-    build:
-      context: .
-      dockerfile: streaming/stream_sparks/Dockerfile
+    build: .
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka:29092
       KAFKA_TOPIC: sensor-events
+    volumes:
+      - ./streaming:/app/streaming
+      - ./simulator:/app/simulator
+      - spark_ivy_cache:/opt/spark-ivy
     depends_on:
-      - kafka  
+      - kafka
+
   producer:
     build:
       context: .
@@ -74,3 +77,6 @@ services:
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
     depends_on:
       - kafka
+
+volumes:
+  spark_ivy_cache:
